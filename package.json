@@ -1,0 +1,19 @@
+{
+  "name": "card_gamer",
+  "version": "1.0.0",
+  "description": "a configurable program to run any tabletop card game.",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/francisgwhitesell/card_gamer"
+  },
+  "author": "Francis Whitesell",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  }
+}
