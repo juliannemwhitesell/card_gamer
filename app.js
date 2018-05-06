@@ -1,12 +1,16 @@
 "use strict";
+
+/* Node and npm imports*/
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
-
 var ObjectID = require('mongodb').ObjectID;
+var mongoose = require("mongoose");
+
+/* Local imports*/
+var Game = require("./models/game");
 
 //Mongo setup code: this can be abstracted away from the main app
-var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost:27017/game", function(err) {
  	// If no error, successfully connected
@@ -28,15 +32,6 @@ app.post("/", function (req, res) {
 	res.send(payload);
 });
 
-//Experimental Mongo code for endpoint
-var gameSchema = new mongoose.Schema({
-  _id: mongoose.Schema.ObjectId,
-  gameId: String,
-  playerIds: Array
-});
-
-var Game = mongoose.model("Game", gameSchema);
-
 app.post("/game", (req, res) => {
 	let received = req.body;
 	//TODO: call the validate function
@@ -51,9 +46,6 @@ app.post("/game", (req, res) => {
     	.catch(err => {
       		res.status(400).send("Unable to save game to database: " + err);
     	});
-    //TODO: does a mongo save give you the id? We need to provide that to the user on the response.
-	//let payload = { "received" : received };
-	//res.send(payload);
 });
 
 app.get("/game/:id", (req, res) => {
