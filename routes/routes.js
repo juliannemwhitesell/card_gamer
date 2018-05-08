@@ -4,15 +4,25 @@ var router = express.Router();
 
 /* Local imports*/
 var Game = require("../models/game");
+var MONGO_CONSTANTS = require("../constants/mongo");
+var SERVER_CONSTANTS = require("../constants/server");
 
 //TODO: Mongo setup code: this can be abstracted away from the main app
 var ObjectID = require('mongodb').ObjectID;
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/game", function(err) {
+
+var connectionString = MONGO_CONSTANTS.MONGO_PREFIX 
+						+ SERVER_CONSTANTS.SERVER 
+						+ ":" 
+						+ MONGO_CONSTANTS.PORT_NUMBER 
+						+ "/" 
+						+ MONGO_CONSTANTS.GAME_COLLECTION_NAME;
+
+mongoose.connect(connectionString, function(err) {
  	// If no error, successfully connected
  	if (!err){
-  		console.log ("connected to localhost:27017/game");
+  		console.log ("connected to " + connectionString + ".");
 	}
 });
 
@@ -52,7 +62,7 @@ router.get("/game/:id", (req, res) => {
 	});
 })
 
-app.get("/", function (req, res) {
+router.get("/", function (req, res) {
   res.send({"here": "gone"});
 });
 

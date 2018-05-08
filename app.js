@@ -1,20 +1,20 @@
 "use strict";
 
-/* Node and npm imports*/
+/* Node and npm imports */
 var express = require("express");
 var bodyParser = require("body-parser");
+var routes = require("./routes/routes");
+
+/* local imports */
+var SERVER_CONSTANTS = require("./constants/server");
+
 var app = express();
-var routes = require('./routes/routes');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(routes);
-
-app.get("/", function (req, res) {
-  res.send({"here": "gone"});
-});
  
-app.listen(3000, "0.0.0.0");
+app.listen(SERVER_CONSTANTS.PORT_NUMBER, SERVER_CONSTANTS.IP_ADDRESS);
 
-//JWHITESELL test comment
+console.log("Listening on port " + SERVER_CONSTANTS.PORT_NUMBER + ".");
